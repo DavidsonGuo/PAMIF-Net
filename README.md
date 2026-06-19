@@ -29,3 +29,17 @@ Clone this repository and install the required dependencies:
 git clone [https://github.com/DavidsonGuo/PAMIF-Net.git](https://github.com/DavidsonGuo/PAMIF-Net.git)
 cd PAMIF-Net
 pip install -r requirements.txt
+
+###Step 2: Launch the Diagnostic Interface
+Execute the following command in your terminal to start the Streamlit web application locally:
+
+Bash
+streamlit run app.py
+Upon execution, your default web browser will automatically open the application at http://localhost:8501/.
+
+###Step 3: Run the Inference
+Navigate to the sample_data/ folder provided in this repository.
+
+Select and upload a representative .npy hyperspectral ROI sample (e.g., Day_9_Golden_Sample.npy) via the left sidebar in the web interface.
+
+The platform will automatically execute the PAMIF-Net inference, outputting the predicted storage day, freshness grade, and rendering highly interpretable Input Gradient Saliency maps highlighting localized deterioration.
