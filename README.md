@@ -29,17 +29,80 @@ Clone this repository and install the required dependencies:
 git clone [https://github.com/DavidsonGuo/PAMIF-Net.git](https://github.com/DavidsonGuo/PAMIF-Net.git)
 cd PAMIF-Net
 pip install -r requirements.txt
+```
 
-###Step 2: Launch the Diagnostic Interface
+### Step 2: Launch the Diagnostic Interface
 Execute the following command in your terminal to start the Streamlit web application locally:
-
-Bash
+```bash
 streamlit run app.py
-Upon execution, your default web browser will automatically open the application at http://localhost:8501/.
+```
+Upon execution, your default web browser will automatically open the application at `http://localhost:8501/`.
 
-###Step 3: Run the Inference
-Navigate to the sample_data/ folder provided in this repository.
+### Step 3: Run the Inference
+1. Navigate to the `sample_data/` folder provided in this repository.
+2. Select and upload a representative `.npy` hyperspectral ROI sample via the left sidebar in the web interface.
+3. The platform will automatically execute the PAMIF-Net inference, outputting the predicted storage day, freshness grade, and rendering highly interpretable Input Gradient Saliency maps highlighting localized deterioration.
 
-Select and upload a representative .npy hyperspectral ROI sample (e.g., Day_9_Golden_Sample.npy) via the left sidebar in the web interface.
+---
 
-The platform will automatically execute the PAMIF-Net inference, outputting the predicted storage day, freshness grade, and rendering highly interpretable Input Gradient Saliency maps highlighting localized deterioration.
+## 🛠️ Repository Structure
+```text
+PAMIF-Net/
+│
+├── app.py                   # Streamlit web application for real-time inference & visualization
+├── train_model.py           # Core PAMIF-Net architecture and 10-trial cross-validation scripts
+├── extract_features.py      # Multi-dimensional feature extraction (PCA, MGAF, Color-Texture)
+├── generate_dataset.py      # Automated script for generating 150x150 ROI .npy tensors
+├── requirements.txt         # Python dependency list
+│
+├── weights/                 # Directory containing the pre-trained models
+│   ├── pamif_net.h5         # Final trained Keras model
+│   └── pca_model.pkl        # Fitted PCA transformation matrix
+│
+└── sample_data/             # Subset of raw .npy tensors for testing the interactive app
+```
+
+## ⚙️ Model Training & Feature Extraction
+If you wish to retrain the PAMIF-Net model or extract features from your own hyperspectral data, you can utilize the provided backend scripts:
+
+1. **Automated ROI Generation:** Crop standard 150x150 regions of interest from raw hyperspectral images.
+   ```bash
+   python generate_dataset.py
+   ```
+2. **Feature Extraction:** Extract PCA, MGAF, and color-texture features for the multimodal architecture.
+   ```bash
+   python extract_features.py
+   ```
+3. **Model Training:** Run the 10-trial cross-validation and ablation studies.
+   ```bash
+   python train_model.py
+   ```
+
+---
+
+## 📊 Dataset Availability
+The complete 4.2GB visible-near-infrared (Vis-NIR) hyperspectral dataset of *Agaricus bisporus* acquired over a 9-day storage period is available upon reasonable request to the corresponding authors due to storage limitations. A representative subset is provided in the `sample_data/` directory for immediate algorithmic testing.
+
+---
+
+## 📩 Contact
+For any inquiries regarding the dataset, code, or paper, please feel free to reach out:
+**Zhen Guo**, School of Pharmaceutical Sciences and Food Engineering, **Liaocheng University**, China.  
+📧 Email: [guozhen@lcu.edu.cn](mailto:guozhen@lcu.edu.cn)
+
+---
+
+## 📝 Citation
+If you find our work or this codebase useful for your research, please consider citing our paper once it is published:
+```bibtex
+@article{Guo2024PAMIFNet,
+  title={Cloud-edge collaborative system for postharvest mushroom freshness monitoring using a patch-aligned spatial-spectral multimodal fusion network},
+  author={Guo, Zhen and Wang, Yaru and Cao, Lele and Auat-Cheein, Fernando A. and Guo, Xingfeng},
+  journal={Computers and Electronics in Agriculture},
+  year={2024},
+  note={Under Review}
+}
+```
+
+## 📄 License
+This project is licensed under the MIT License - see the `LICENSE` file for details.
